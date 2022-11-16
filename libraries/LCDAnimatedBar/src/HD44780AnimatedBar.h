@@ -11,7 +11,7 @@ class HD44780AnimatedBar : public LCDAnimatedBar {
     // public types
     public: 
         typedef enum {
-            BAR_rowS = 0,
+            BAR_LINES = 0,
             BAR_NEEDELS = 1,
             BAR_BUBBLES = 2,
             BAR_MORE_BUBBLES = 3
@@ -20,11 +20,11 @@ class HD44780AnimatedBar : public LCDAnimatedBar {
 
     // initialize the class static variables
     public:
-        static void init( hd44780_I2Cexp& llcd,  HD44780AnimatedBar::bar_type_t barType = BAR_rowS);
+        static void init( hd44780_I2Cexp& llcd,  HD44780AnimatedBar::bar_type_t barType = BAR_LINES);
 
     // protected/private data - arrays with character definitions
     protected:
-        static const uint8_t  charBarrowsBitmap[][8];
+        static const uint8_t  charBarLinesBitmap[][8];
         static const uint8_t  charBarNeedlesBitmap[][8];
         static const uint8_t  charBarBubblesBitmap[][8];
         static const uint8_t  charBarMoreBubblesBitmap[][8];
