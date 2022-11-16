@@ -1,0 +1,72 @@
+#include <Arduino.h>
+#include "LCDAnimatedBar.h"
+
+LCDAnimatedBar::LCDAnimatedBar( uint8_t col=0, 
+                                uint8_t row=0, 
+                                uint8_t value = 0, 
+                                uint8_t start_value=0, 
+                                uint8_t end_value = 7) :
+        m_col(col),
+        m_row(row),
+        m_start_value(start_value),
+        m_end_value(end_value),
+        m_value(value),
+        m_go_up(true)   {
+};
+
+void LCDAnimatedBar::setPosition(uint8_t col, uint8_t row) {
+    m_col = col;
+    m_row = row;
+};
+
+void LCDAnimatedBar::show() {
+    if(LCDAnimatedBar::callback)
+        LCDAnimatedBar::callback(m_col, m_row, m_value);
+};
+
+void LCDAnimatedBar::update() {
+      if(m_go_up == true) { // going up
+        if( m_value < m_end_value ) {
+          m_value++;
+        } else {
+          m_value--;
+          m_go_up = false;
+        }
+      } else { // going down
+        if( m_value > m_start_value ) {
+          m_value--;
+        } else {
+          m_value++;
+          m_go_up = true;
+        }
+      }
+      if(LCDAnimatedBar::callback)
+        LCDAnimatedBar::callback(m_col, m_row, m_value);
+};
+
+static const uint8_t LCDAnimatedBar::charBitmap[][8] = {
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f}, // char 0 
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f}, // char 1
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, 0x1f}, // char 2
+	{0x00, 0x00, 0x00, 0x00, 0x1f, 0x1f, 0x1f, 0x1f}, // char 3
+	{0x00, 0x00, 0x00, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f}, // char 4
+	{0x00, 0x00, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f}, // char 5
+	{0x00, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f}, // char 6
+	{0x1f, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f}, // char 7
+};
+// static const uint8_t LCDAnimatedBar::charBitmap[][8] = {
+// 	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x8, 0x8}, // char 0 
+// 	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x8, 0x8}, // char 1
+// 	{0x00, 0x00, 0x00, 0x00, 0x00, 0x8, 0x8, 0x8}, // char 2
+// 	{0x00, 0x00, 0x00, 0x00, 0x8, 0x8, 0x8, 0x8}, // char 3
+// 	{0x00, 0x00, 0x00, 0x8, 0x8, 0x8, 0x8, 0x8}, // char 4
+// 	{0x00, 0x00, 0x8, 0x8, 0x8, 0x8, 0x8, 0x8}, // char 5
+// 	{0x00, 0x8, 0x8, 0x8, 0x8, 0x8, 0x8, 0x8}, // char 6
+// 	{0x8, 0x8, 0x8, 0x8, 0x8, 0x8, 0x8, 0x8}, // char 7
+// };
+
+static const uint32_t LCDAnimatedBar::charBitmapSize = (sizeof(charBitmap ) / sizeof (charBitmap[0]));
+static LCDAnimatedBar::callback_t LCDAnimatedBar::callback = NULL;
+static void LCDAnimatedBar::setCallback(LCDAnimatedBar::callback_t fcallback) {
+    LCDAnimatedBar::callback = fcallback;
+}

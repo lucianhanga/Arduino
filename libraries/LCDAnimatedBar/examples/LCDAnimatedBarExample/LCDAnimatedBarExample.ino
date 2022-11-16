@@ -2,7 +2,6 @@
 #include <hd44780.h>
 #include <hd44780ioClass/hd44780_I2Cexp.h>
 #include <LCDAnimatedBar.h>
-#include <HD44780AnimatedBar.h>
 
 //
 // to keep the implementation of the LCDAnimatedBar independent of the LCD library
