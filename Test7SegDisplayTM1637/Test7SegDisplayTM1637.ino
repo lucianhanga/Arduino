@@ -20,9 +20,9 @@
 
 const uint8_t SEG_DANI[] = {
 
-  SEG_B | SEG_C | SEG_D | SEG_E | SEG_G,      // d
-  SEG_E | SEG_F | SEG_A | SEG_B | SEG_C,      // A
-  SEG_E | SEG_G | SEG_C,                      // n
+  SEG_B | SEG_C | SEG_D | SEG_E | SEG_G,          // d
+  SEG_E | SEG_F | SEG_A | SEG_B | SEG_C | SEG_G,  // A
+  SEG_E | SEG_G | SEG_C,                          // n
   SEG_F | SEG_E
 
 };
